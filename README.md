@@ -1,73 +1,139 @@
-# React + TypeScript + Vite
+# QR Studio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Open-source QR Code generator built with React, TypeScript and Tailwind CSS.
 
-Currently, two official plugins are available:
+Create, customize and export beautiful QR Codes directly from your browser.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![QR Studio Preview](public/preview-qrstudio-by-zayven.png)
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Content Types
 
-## Expanding the ESLint configuration
+- URL
+- Text
+- Email
+- WiFi
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Customization
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- QR Code size
+- Margin
+- Dot color
+- Background color
+- Corner colors
+- Dot styles
+- Corner styles
+- Logo upload
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Export
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- PNG
+- JPEG
+- SVG
+
+## Smart URL Handling
+
+QR Studio automatically adds `https://` when needed.
+
+Example:
+
+```txt
+zeresto.fr
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+becomes:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```txt
+https://zeresto.fr
 ```
+
+## Email QR Codes
+
+Generate QR Codes that automatically open the user's mail application.
+
+Example:
+
+```txt
+contact@zayven.fr
+```
+
+generates:
+
+```txt
+mailto:contact@zayven.fr
+```
+
+## WiFi QR Codes
+
+Generate QR Codes allowing users to connect to a WiFi network by scanning the code.
+
+Supported security types:
+
+- WPA / WPA2
+- WEP
+- Open network
+
+## Tech Stack
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- qr-code-styling
+- Lucide React
+
+## Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start development server:
+
+```bash
+npm run dev
+```
+
+Build production version:
+
+```bash
+npm run build
+```
+
+## Deployment
+
+QR Studio can be deployed easily on:
+
+- GitHub Pages
+- Vercel
+- Netlify
+
+## Roadmap
+
+- [ ] vCard support
+- [ ] Phone number QR Codes
+- [ ] SMS QR Codes
+- [ ] Social media QR Codes
+- [ ] QR templates
+- [ ] Dark / Light theme
+- [ ] Batch generation
+
+## Contributing
+
+Pull requests are welcome.
+
+If you'd like to propose a feature or report a bug, please open an issue.
+
+## License
+
+MIT License
+
+## Author
+
+Developed by Zayven Labs.
+
+- Website: https://zayven.fr
+- GitHub: https://github.com/zayvenlabs
