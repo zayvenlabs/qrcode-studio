@@ -44,7 +44,7 @@ export default function App() {
             </div>
 
             <a
-              href="https://github.com/zayvenlabs/qrcode-generator"
+              href="https://github.com/zayvenlabs/qrcode-studio"
               target="_blank"
               rel="noreferrer"
               className="shrink-0 flex items-center gap-2 rounded-full border border-white/10 px-5 py-3 text-sm font-medium text-zinc-400 transition hover:border-cyan-300 hover:text-cyan-200"
