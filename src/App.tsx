@@ -1,122 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from "react";
+import { QRContentForm } from "./components/QRContentForm";
+import { QRPreview } from "./components/QRPreview";
+import type { QRConfig } from "./types/qr.types";
+import { FaGithub } from "react-icons/fa";
+import { ScanQrCode } from "lucide-react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const defaultConfig: QRConfig = {
+  contentType: "url",
+  data: "",
+  email: "",
+  emailSubject: "",
+  emailBody: "",
+  wifiSsid: "",
+  wifiPassword: "",
+  wifiEncryption: "WPA",
+  size: 300,
+  margin: 10,
+  dotColor: "#111827",
+  backgroundColor: "#ffffff",
+  cornerSquareColor: "#06b6d4",
+  cornerDotColor: "#111827",
+  dotStyle: "rounded",
+  cornerSquareStyle: "extra-rounded",
+  cornerDotStyle: "dot",
+  logo: null,
+};
+
+export default function App() {
+  const [config, setConfig] = useState<QRConfig>(defaultConfig);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <main className="min-h-screen overflow-x-hidden bg-zinc-950 px-4 py-5 text-white lg:px-10 lg:py-8">
+      <div className="mx-auto items-start w-full max-w-[860px]">
+        <header className="mb-7 hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur lg:block">
+          <div className="mt-3 flex items-end justify-between gap-6">
+            <div>
+              <h1 className="flex gap-2 font-['Plus_Jakarta_Sans'] text-5xl font-bold tracking-tight">
+              <ScanQrCode size={50} /> QR Studio</h1>
+              <p className="mt-3 text-sm leading-6 text-zinc-400">
+                Créez, personnalisez et exportez de beaux QR Codes directement
+                depuis votre navigateur.
+              </p>
+            </div>
 
-      <div className="ticks"></div>
+            <a
+              href="https://github.com/zayvenlabs/qrcode-generator"
+              target="_blank"
+              rel="noreferrer"
+              className="shrink-0 flex items-center gap-2 rounded-full border border-white/10 px-5 py-3 text-sm font-medium text-zinc-400 transition hover:border-cyan-300 hover:text-cyan-200"
+            >
+             <FaGithub size={18} /> Dépôt GitHub
+            </a>
+          </div>
+        </header>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+        <div className="grid w-full items-start gap-5 lg:grid-cols-[420px_420px]">
+          <QRContentForm config={config} setConfig={setConfig} />
+          <QRPreview config={config} />
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      </div>
+    </main>
+  );
 }
-
-export default App
