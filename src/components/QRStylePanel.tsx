@@ -4,9 +4,10 @@ import type {
   DotStyle,
   QRConfig,
 } from "../types/qr.types";
-import { HexColorPicker } from "react-colorful";
-import { useState } from "react";
 
+import { HexColorPicker } from "react-colorful";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 interface Props {
   config: QRConfig;
   setConfig: React.Dispatch<React.SetStateAction<QRConfig>>;
@@ -177,6 +178,74 @@ function ColorInput({
 }) {
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
+  const modal = open
+    ? createPortal(
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm"
+          onClick={() => setOpen(false)}
+        >
+          <div
+            className="w-full max-w-sm rounded-[28px] border border-white/10 bg-zinc-950 p-5 shadow-2xl shadow-black/50"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-medium uppercase tracking-[0.18em] text-cyan-300/70">
+                  Couleur
+                </p>
+                <h3 className="mt-1 text-lg font-semibold text-white">
+                  {label}
+                </h3>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-zinc-300 transition hover:bg-white/10 hover:text-white"
+              >
+                Fermer
+              </button>
+            </div>
+
+            <HexColorPicker color={value} onChange={onChange} className="!w-full" />
+
+            <div className="mt-4 flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 p-3">
+              <div
+                className="h-11 w-11 shrink-0 rounded-xl border border-white/15"
+                style={{ backgroundColor: value }}
+              />
+
+              <input
+                value={value}
+                onChange={(event) => onChange(event.target.value)}
+                className="min-w-0 flex-1 bg-transparent text-base font-semibold uppercase text-white outline-none"
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="mt-4 w-full rounded-2xl bg-cyan-400 py-3 font-semibold text-black transition hover:bg-cyan-300"
+            >
+              Appliquer
+            </button>
+          </div>
+        </div>,
+        document.body
+      )
+    : null;
+
   return (
     <>
       <label className="grid gap-2">
@@ -185,7 +254,7 @@ function ColorInput({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/30 p-3 text-left"
+          className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/30 p-3 text-left transition hover:border-cyan-300/50"
         >
           <div
             className="h-10 w-10 rounded-lg border border-white/10"
@@ -196,42 +265,7 @@ function ColorInput({
         </button>
       </label>
 
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-4 sm:items-center">
-          <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-zinc-950 p-5">
-            <h3 className="mb-4 text-lg font-semibold text-white">
-              {label}
-            </h3>
-
-            <HexColorPicker
-              color={value}
-              onChange={onChange}
-              className="!w-full"
-            />
-
-            <div className="mt-4 flex items-center gap-3 rounded-2xl border border-white/10 bg-black/30 p-3">
-              <div
-                className="h-10 w-10 rounded-lg"
-                style={{ backgroundColor: value }}
-              />
-
-              <input
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
-                className="flex-1 bg-transparent text-white outline-none"
-              />
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="mt-4 w-full rounded-2xl bg-cyan-500 py-3 font-medium text-black"
-            >
-              Appliquer
-            </button>
-          </div>
-        </div>
-      )}
+      {modal}
     </>
   );
 }

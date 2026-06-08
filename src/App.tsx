@@ -14,7 +14,7 @@ const defaultConfig: QRConfig = {
   wifiSsid: "",
   wifiPassword: "",
   wifiEncryption: "WPA",
-  size: 300,
+  size: 250,
   margin: 10,
   dotColor: "#111827",
   backgroundColor: "#ffffff",

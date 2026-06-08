@@ -79,7 +79,7 @@ export function QRContentForm({ config, setConfig }: Props) {
         Choisissez le type de QR Code à générer.
       </p>
 
-      <div className="mt-4 flex flex-wrap gap-2 md:gap-4">
+      <div className="mt-4 flex gap-1 md:gap-4 justify-center">
         {contentTypes.map((item) => (
           <button
             key={item.value}
