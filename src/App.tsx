@@ -28,6 +28,7 @@ const defaultConfig: QRConfig = {
 
 export default function App() {
   const [config, setConfig] = useState<QRConfig>(defaultConfig);
+  const [transparentBackground, setTransparentBackground] = useState(false);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-zinc-950 px-4 py-5 text-white lg:px-10 lg:py-8">
@@ -56,7 +57,11 @@ export default function App() {
 
         <div className="grid w-full items-start gap-5 lg:grid-cols-[420px_420px]">
           <QRContentForm config={config} setConfig={setConfig} />
-          <QRPreview config={config} />
+          <QRPreview
+            config={config}
+            transparentBackground={transparentBackground}
+            setTransparentBackground={setTransparentBackground}
+          />
         </div>
       </div>
     </main>
