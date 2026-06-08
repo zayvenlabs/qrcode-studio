@@ -4,6 +4,8 @@ import type {
   DotStyle,
   QRConfig,
 } from "../types/qr.types";
+import { HexColorPicker } from "react-colorful";
+import { useState } from "react";
 
 interface Props {
   config: QRConfig;
@@ -173,23 +175,64 @@ function ColorInput({
   value: string;
   onChange: (value: string) => void;
 }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <label className="grid gap-2">
-      <span className="text-sm font-medium text-zinc-300">{label}</span>
-      <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/30 p-3">
-        <input
-          type="color"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="h-9 w-12 cursor-pointer border-0 bg-transparent"
-        />
-        <input
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full bg-transparent text-sm text-white outline-none"
-        />
-      </div>
-    </label>
+    <>
+      <label className="grid gap-2">
+        <span className="text-sm font-medium text-zinc-300">{label}</span>
+
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/30 p-3 text-left"
+        >
+          <div
+            className="h-10 w-10 rounded-lg border border-white/10"
+            style={{ backgroundColor: value }}
+          />
+
+          <span className="text-white">{value}</span>
+        </button>
+      </label>
+
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-4 sm:items-center">
+          <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-zinc-950 p-5">
+            <h3 className="mb-4 text-lg font-semibold text-white">
+              {label}
+            </h3>
+
+            <HexColorPicker
+              color={value}
+              onChange={onChange}
+              className="!w-full"
+            />
+
+            <div className="mt-4 flex items-center gap-3 rounded-2xl border border-white/10 bg-black/30 p-3">
+              <div
+                className="h-10 w-10 rounded-lg"
+                style={{ backgroundColor: value }}
+              />
+
+              <input
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="flex-1 bg-transparent text-white outline-none"
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="mt-4 w-full rounded-2xl bg-cyan-500 py-3 font-medium text-black"
+            >
+              Appliquer
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
